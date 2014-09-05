@@ -16,10 +16,12 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    
+       if current_user.line_items.where(:status => 0).empty?
+        redirect_to store_url, notice: "Your cart is empty please select atleast one product to order"
+      else
     @order = Order.new
   end
-
+  end
   # GET /orders/1/edit
   def edit
   end
@@ -27,23 +29,22 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-     
-    @order = Order.new(order_params)
-   
-     respond_to do |format|
-      if @order.save
        
-        current_user.line_items.update_all(:order_id => @order.id)
-        current_user.line_items.update_all(:status => true)
-       format.html { redirect_to '/', notice: 'Order was successfully updated.' }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+      @order = Order.new(order_params)
+   
+       respond_to do |format|
+        if @order.save
+        
+          current_user.line_items.update_all(:order_id => @order.id)
+          current_user.line_items.update_all(:status => true)
+          format.html { redirect_to '/', notice: 'Order was successfully updated.' }
+        else
+          format.html { render :new }
+          format.json { render json: @order.errors, status: :unprocessable_entity }
+        end
       end
-    end
+   end   
  
- 
-  end
 
 
   # PATCH/PUT /orders/1

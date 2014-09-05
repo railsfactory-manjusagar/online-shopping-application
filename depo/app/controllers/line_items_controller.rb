@@ -62,20 +62,14 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
-      current_user.line_items.destroy_all
+      current_user.line_items.where(:status => 0).destroy_all
       respond_to do |format|
       format.html { redirect_to store_url,notice: 'Your cart is currently empty' }
       format.json { head :no_content }
 end
  end
 
- def delete1
-    @line_item.destroy 
-     respond_to do |format|
-      format.html { redirect_to line_items_url,notice: 'item removed' }
-      format.json { head :no_content }
-  end
- end
+  
   
 
   private

@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get "mycart/index" 
 
   get "mycart/list"
+   
+   post "mycart/delete"
 
   root 'store#index', as: 'store'
   # The priority is based upon order of creation: first created -> highest priority.
