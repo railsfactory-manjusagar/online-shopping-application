@@ -1,0 +1,47 @@
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+ <h2>Your Cart</h2>
+ <table>
+  <thead>
+    <tr>
+      <th>productName</th> 
+      <th>quantity</th>
+      <th>price</th>
+      <th>option</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+     <% @arr = Array.new %>
+       <% current_user.line_items.all.where("status = ?", 0).each do |item| %>
+      <tr>
+        <td><%=item.product.title %></td>
+        <td><%=item.quantity %></td>
+        <td><%=  number_to_currency(item.product.price) %></td>
+        <td><%= link_to 'Remove' %></td>
+        <% @arr << item.product.price * item.quantity %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+    <table>
+ <% $sum = @arr.sum %>
+      <tr class="total_line">
+
+      <td colspan="2">Total</td>
+
+      <td class="total_cell"><%= number_to_currency($sum) %></td>
+
+     </tr>
+
+ </table>
+ 	 
+
+
+
+   <%= button_to "Checkout", new_order_path, :method => :get %> <br/>
+  <%= button_to 'Empty cart', @line_item, :method => :delete,data: { confirm: 'Are you sure?' } %> &nbsp;
+   <%= button_to 'continu_shopping', '/', :method => :get %>

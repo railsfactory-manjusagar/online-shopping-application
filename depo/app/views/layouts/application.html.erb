@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pragprog Books Online Store</title>
+<%= stylesheet_link_tag "application", media:"all","data-turbolinks-track" => true %>
+<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+<%= csrf_meta_tags %>
+
+</head>
+<body class="<%= controller.controller_name %>">
+<div id="banner">
+<%= image_tag("logo.jpg") %>
+<%= @page_title || "Online shopping" %>
+</div>
+<div id="columns">
+<div id="side">
+<div id="cart">
+	<% if @cart %>
+    <%= hidden_div_if(@cart.line_items.empty?, id: 'cart') do %>
+    <%= render @cart %>
+    <% end %>
+    <% end %>
+
+</div>
+
+<ul>
+<li><a href="/">Home</a></li>
+<li><%=link_to 'history',mycart_index_path%></li>
+<li><%=link_to 'edit profile',edit_user_registration_path%></li>
+<li><%=link_to 'my cart',mycart_list_path%></li>
+<li><%=Time.now.asctime%></li>
+</ul>
+<%# if session[:user_id] %>
+<ul>
+	<li><%#= link_to 'Orders',orders_path%></li>
+	<li><%#= link_to 'Products', products_path %></li>
+	<li><%#= link_to 'Users',users_path%></li>
+</ul>
+<%#= button_to 'Logout', logout_path, method: :delete %>
+<%# end %>
+
+
+<div id="user_nav">
+  <% if user_signed_in? %>
+  <span style="background:yellow">  Signed in as <%= current_user.email %>. Not you?
+    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+  <% else %>
+    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %></span>
+  <% end %>
+</div>
+
+
+</div>
+<div id="main">
+<%= yield %>
+</div>
+</div>
+</body>
+</html>
