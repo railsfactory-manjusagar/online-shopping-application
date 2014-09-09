@@ -21,5 +21,7 @@ ActiveAdmin.register Order do
       column :pay_type
       column :created_at
     end
-
+ index :download_links => false do
+     index :download_links => false
+  end
 end

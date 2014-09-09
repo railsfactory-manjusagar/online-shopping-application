@@ -22,9 +22,15 @@ end
          else
           current_item = current_user.line_items.build(product_id: product_id)
       end
-        p current_item
+           
       current_item
    end
+
+def totalprice
+   product.price * quantity 
+end
+
+     
 
 
 

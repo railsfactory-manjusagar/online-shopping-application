@@ -13,6 +13,38 @@ ActiveAdmin.register Order do
   #   permitted << :other if resource.something?
   #   permitted
   # end
+     show do |order|
+    div do      
+      panel("Items") do
+        table_for(order.line_items) do
+          column "Title" do |i| 
+            i.product.title
+          end
+
+          column "email" do |i| 
+            i.user.email
+          end
+          column :quantity
+            @total = []
+            @price = 0
+          column "price" do |i|
+          @total <<  i.product.price * i.quantity
+              number_to_currency(i.product.price * i.quantity)
+          end
+         @price = @total.sum
+
+         end
+        end
+        table_for order do
+         column :totalprice do 
+         number_to_currency(@price)
+      end
+    end
+      end
+
+  end
+      
+
    filter :name
 
    index do
@@ -21,5 +53,7 @@ ActiveAdmin.register Order do
       column :pay_type
       column :created_at
     end
-
+ index :download_links => false do
+     index :download_links => false
+  end
 end

@@ -20,6 +20,8 @@ class OrdersController < ApplicationController
         redirect_to store_url, notice: "Your cart is empty please select atleast one product to order"
       else
     @order = Order.new
+    
+
   end
   end
   # GET /orders/1/edit
@@ -31,10 +33,14 @@ class OrdersController < ApplicationController
   def create
        
       @order = Order.new(order_params)
-   
+         
        respond_to do |format|
         if @order.save
-        
+            
+              @line_item = LineItem.new
+              @totalpri =  @line_item.totalprice(current_user)
+               
+               @order.update_attribute("totalprice", "#{@totalpri}")
           current_user.line_items.update_all(:order_id => @order.id)
           current_user.line_items.update_all(:status => true)
           format.html { redirect_to '/', notice: 'Order was successfully updated.' }

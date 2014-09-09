@@ -46,3 +46,6 @@
    <%= button_to "Checkout", new_order_path, :method => :get %> <br/>
   <%= button_to 'Empty cart', @line_item, :method => :delete,data: { confirm: 'Are you sure?' } %> &nbsp;
    <%= button_to 'continu_shopping', '/', :method => :get %>
+
+
+

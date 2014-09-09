@@ -24,10 +24,10 @@
 </div>
 
 <ul>
-<li><a href="/">Home</a></li>
-<li><%=link_to 'history',mycart_index_path%></li>
-<li><%=link_to 'edit profile',edit_user_registration_path%></li>
-<li><%=link_to 'my cart',mycart_list_path%></li>
+<li><a href="/" id="nav-home">Home</a></li>
+<li><%=link_to 'history',mycart_index_path, class: "#{cp(mycart_index_path)} additional_class" %></li>
+<li><%=link_to 'edit profile',edit_user_registration_path, class: "#{cp(edit_user_registration_path)} additional_class"%></li>
+<li><%=link_to 'my cart',mycart_list_path, class: "#{cp(mycart_list_path)} additional_class"%></li>
 <li><%=Time.now.asctime%></li>
 </ul>
 <%# if session[:user_id] %>

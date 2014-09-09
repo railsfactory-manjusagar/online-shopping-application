@@ -10,24 +10,37 @@ ActiveAdmin.register_page "Dashboard" do
       #end
     #end
 
-section "This Month Orders" do
-     table_for LineItem.order("updated_at desc").limit(30) do
-         column :product 
-         column :order
-         
-     end
+ strong section "This Month Orders",class: 'font' do
+     table_for Order.order("updated_at desc").limit(30) do
+         column :name 
+         column :address
+         column "purchased_on" , :created_at
+         column :id  do |id|
+         link_to id.id, admin_order_path(id),  :onclick=>"window.open(this.href,'view order info','scrollbars=yes,height=600, width=600');return false;" 
+ 
+          end
+       end
+        
  end
 
+
       
+    
+
    
-section "Recent Products" do
-    table_for Product.order("created_at desc").limit(5) do
-      column :title
-      column :created_at
-    end
+    strong section "Recent Products" do
+      table_for Product.order("created_at desc").limit(5) do
+        column :title
+        column :created_at
+        column "photo" do |product|
+  image_tag product.photo, class: 'my_image_size'
 end
-section "Recent Users" do
-table_for User.order("created_at desc").limit(5) do
+    end
+  end
+
+
+  strong   section "Recent Users" do
+      table_for User.order("created_at desc").limit(5) do
       column :email
       column :created_at
     end

@@ -13,6 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+
+ .current {
+color:blue;
+
+}
  body {
     background-color: #CCFF99;
   
@@ -113,4 +119,9 @@ display: none
 }
 }
 }
+}
+
+
+body#home a#nav-home
+{color: red;
 }
